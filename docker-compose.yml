@@ -4,7 +4,7 @@ services:
     image: postgres:alpine
     restart: always
     environment:
-      - POSTGRES_USER=${USER}
+      - POSTGRES_USER=${PUSER}
       - POSTGRES_PASSWORD=${PASSWORD}
     volumes:
       - postgres:/var/lib/postgresql/data
