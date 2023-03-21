@@ -3,18 +3,31 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/server.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
+    "@types/dotenv": "^8.2.0",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
     "express": "~4.16.1",
+    "express-async-errors": "^3.1.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "jsonwebtoken": "^9.0.0",
+    "morgan": "~1.9.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "prisma": "^4.11.0"
+    "@types/bcryptjs": "^2.4.2",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/node": "^18.15.5",
+    "prisma": "^4.11.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.2"
   }
 }
