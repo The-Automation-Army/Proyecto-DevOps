@@ -4,6 +4,7 @@
     "outDir": "dist",
     "strict": true,                                      /* Enable all strict type-checking options. */
     "lib": ["esnext"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strictNullChecks": false
   }
 }
