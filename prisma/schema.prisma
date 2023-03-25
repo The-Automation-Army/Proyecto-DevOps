@@ -57,12 +57,12 @@ model Animal {
 }
 
 model Supplier {
-  supplier_id	Int 	@id @unique @default(autoincrement())
-  name			String
-  type			Type
-  email			String	@unique
-  telephone		String	@unique
-  address		String	@unique
+  	supplier_id		Int 	@id @unique @default(autoincrement())
+  	name			String
+  	type			Type
+  	email			String	@unique
+  	telephone		String	@unique
+  	address			String	@unique
 }
 
 model ZookeepersCaringHabitats {
@@ -74,22 +74,22 @@ model ZookeepersCaringHabitats {
 }
 
 enum Role {
-  USER
-  ADMIN
+  	USER
+  	ADMIN
 }
 
 enum Category {
-  AMPHIBIANS_FISH
-  BIRDS
-  INVERTEBRATES
-  MAMMALS
-  REPTILES
+  	AMPHIBIANS_FISH
+  	BIRDS
+  	INVERTEBRATES
+  	MAMMALS
+  	REPTILES
 }
 
 enum Diet {
-  Herbivorous
-  Omnivores
-  Carnivorous
+	Herbivorous
+	Omnivores
+	Carnivorous
 }
 
 enum Qualification {
