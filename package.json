@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/server.ts"
+    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/server.ts",
+    "test": "vitest run --reporter verbose"
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
@@ -28,6 +29,8 @@
     "prisma": "^4.11.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.2",
+    "vitest": "^0.29.7",
+    "vitest-mock-extended": "^1.1.3"
   }
 }

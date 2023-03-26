@@ -1,4 +1,4 @@
-import { client } from "../../database/prismaClient";
+import prisma from "../../../libs/prisma";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { JWT } from "../../utils/jwt";
@@ -10,7 +10,7 @@ interface IRequest {
 
 class AuthenticateUserUseCase {
   async execute({ email, password }: IRequest) {
-    const userAlreadyExists = await client.user.findFirst({
+    const userAlreadyExists = await prisma.user.findFirst({
       where: {
         email,
       },

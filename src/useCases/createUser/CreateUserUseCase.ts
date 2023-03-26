@@ -1,4 +1,4 @@
-import { client } from "../../database/prismaClient";
+import prisma from "../../../libs/prisma";
 import { hash } from "bcryptjs";
 
 interface IUserRequest {
@@ -9,7 +9,7 @@ interface IUserRequest {
 
 class CreateUserUseCase {
   async execute({ username, email, password }: IUserRequest) {
-    const userAlreadyExists = await client.user.findFirst({
+    const userAlreadyExists = await prisma.user.findFirst({
       where: {
         email,
       },
@@ -20,7 +20,7 @@ class CreateUserUseCase {
     }
 
     const passwordHash = await hash(password, 8);
-    const user = await client.user.create({
+    const user = await prisma.user.create({
       data: {
         username,
         email,
