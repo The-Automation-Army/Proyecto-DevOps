@@ -2,21 +2,109 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+	provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+	provider = "postgresql"
+	url      = env("DATABASE_URL")
 }
 
 model User {
-  id        Int      @id @unique @default(autoincrement())
-  username  String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+	id			Int			@id @unique @default(autoincrement())
+	username 	String
+	email		String		@unique
+	password 	String
+	createdAt	DateTime	@default(now())
+	updatedAt	DateTime	@updatedAt
 
-  @@map("users")
+	@@map("users")
+}
+
+model Zookeeper {
+	id          	Int							@id @unique @default(autoincrement())
+	name    		String
+	responsibility	Role						@default(USER)
+	qualification	Qualification
+	salary    		Float
+	createdAt 		DateTime					@default(now())
+	updatedAt 		DateTime					@updatedAt
+	authorId   		Int
+	habitats		ZookeepersCaringHabitats[]
+}
+
+model Habitat {
+	id     			Int    						@id @unique @default(autoincrement())
+	category		Category
+	size 			Float
+	capacity		Int
+	area			Area
+	food_percentage	Float
+	zookeepers		ZookeepersCaringHabitats[]
+	animals			Animal[]
+}
+
+model Animal {
+	animal_id	Int 		@id @unique @default(autoincrement())
+	name		String
+	gender		String
+	height		Float
+	weight		Float
+	category	Category
+	diet		Diet
+	belongTo	Habitat		@relation(fields: [habitatId], references: [id])
+	habitatId	Int
+}
+
+model Supplier {
+  	supplier_id		Int 	@id @unique @default(autoincrement())
+  	name			String
+  	type			Type
+  	email			String	@unique
+  	telephone		String	@unique
+  	address			String	@unique
+}
+
+model ZookeepersCaringHabitats {
+	zookeeper	Zookeeper	@relation(fields: [zookepeerId], references: [id])
+	zookepeerId	Int
+	habitat		Habitat		@relation(fields: [habitadId], references: [id])
+	habitadId	Int
+	@@id([zookepeerId, habitadId])
+}
+
+enum Role {
+  	USER
+  	ADMIN
+}
+
+enum Category {
+  	AMPHIBIANS_FISH
+  	BIRDS
+  	INVERTEBRATES
+  	MAMMALS
+  	REPTILES
+}
+
+enum Diet {
+	Herbivorous
+	Omnivores
+	Carnivorous
+}
+
+enum Qualification {
+	Biology
+	Psychology
+}
+
+enum Area {
+	A
+	B
+	C
+	D
+}
+
+enum Type {
+	service
+	product
 }
