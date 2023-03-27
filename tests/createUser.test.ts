@@ -1,6 +1,6 @@
 import { describe, expect, it, test, vi } from "vitest";
 import prisma from "../libs/__mocks__/prisma";
-import { createUser } from "../src/useCases/sample/createUser";
+import { createUser } from "../src/services/user.service";
 
 vi.mock("../libs/prisma");
 
