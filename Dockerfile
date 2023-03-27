@@ -1,15 +1,17 @@
-FROM node:18.15.0
+FROM node:18.15-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json .
+COPY package*.json ./
+
+COPY prisma ./prisma/
 
 RUN npm install
 
 COPY . .
 
-USER node
+RUN npx prisma generate
 
 EXPOSE 3000
 
-CMD ["npm ", "run", "dev"]
+CMD ["npm", "run", "migrate:deploy"]
