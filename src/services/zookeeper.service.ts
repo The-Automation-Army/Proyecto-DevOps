@@ -2,14 +2,13 @@ import { Qualification, Role, Zookeeper, ZookeepersCaringHabitats } from "@prism
 import prisma from "../../libs/prisma";
 
 //Creation of a zookeeper.
-export async function createZookeeper(name:string, responsibility:Role, qualification:Qualification, salary:number, authorId:number, habitatsInfo:ZookeepersCaringHabitats[]) {
+export async function createZookeeper(name:string, responsibility:Role, qualification:Qualification, salary:number, habitatsInfo:ZookeepersCaringHabitats[]) {
     const zookeeper = await prisma.zookeeper.create({
         data: {
             name,
             responsibility,
             qualification,
             salary,
-            authorId, //should be removed.
             habitats: {
                 create: habitatsInfo,
             },
