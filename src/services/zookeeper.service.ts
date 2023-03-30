@@ -28,7 +28,7 @@ export async function findZookeeperById(requestedId:number) {
 };
 
 //Update of a zookeeper by his ID.
-export async function updateZookeeperById(requestedId:number, modName:string, modResponsibility:Role, modQualification:Qualification, modSalary:number, modAuthorId:number, modHabitatsInfo:ZookeepersCaringHabitats[]) {
+export async function updateZookeeperById(requestedId:number, modName:string, modResponsibility:Role, modQualification:Qualification, modSalary:number, modHabitatsInfo:ZookeepersCaringHabitats[]) {
     const zookeeper = await prisma.zookeeper.update({
         where: {
             id: requestedId,
@@ -38,7 +38,6 @@ export async function updateZookeeperById(requestedId:number, modName:string, mo
             responsibility: modResponsibility,
             qualification: modQualification,
             salary: modSalary,
-            authorId: modAuthorId, //should be removed.
             habitats: {
                 create: modHabitatsInfo,
             },
