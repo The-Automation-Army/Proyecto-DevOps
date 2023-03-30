@@ -27,7 +27,7 @@ export async function findSupplierById(id:number) {
 ;}
 
 //Read (query) of many suppliers via their names.
-export async function findSupplierByName(suplierName:string) {
+export async function findSuppliersByName(suplierName:string) {
     const suppliers = await prisma.supplier.findMany({
         where: {
             name:suplierName,
@@ -59,4 +59,4 @@ export async function deleteSupplierById(id:number) {
             supplier_id:id,
         },
     });
-}
+};
