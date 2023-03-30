@@ -28,7 +28,7 @@ export async function findAnimalById(id:number) {
 };
 
 //Read (query) of many animals via its name.
-export async function findAnimmalsByName(requestedName:string) {
+export async function findAnimalsByName(requestedName:string) {
     const animals = await prisma.animal.findMany({
         where: {
             name: requestedName,
@@ -38,7 +38,7 @@ export async function findAnimmalsByName(requestedName:string) {
 };
 
 //Read (query) of many animals via its category.
-export async function findAnimmalsByCategory(requestedCategory:Category) {
+export async function findAnimalsByCategory(requestedCategory:Category) {
     const animals = await prisma.animal.findMany({
         where: {
             category: requestedCategory,
