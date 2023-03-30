@@ -1,5 +1,4 @@
 import { Supplier, Type } from "@prisma/client";
-import { type } from "os";
 import prisma from "../../libs/prisma";
 
 //Creation of one supplier.
