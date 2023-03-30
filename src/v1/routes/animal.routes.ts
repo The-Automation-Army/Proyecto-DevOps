@@ -5,7 +5,7 @@ import { ensureAuthenticated } from "../../middlewares/authentication";
 const animalRoutes = Router();
 
 animalRoutes.post("/newAnimal", ensureAuthenticated, createNewAnimal);
-animalRoutes.get("/findAnimalByID", findAnAnimalById);
+animalRoutes.get("/findAnimalById", findAnAnimalById);
 animalRoutes.get("/findAnimalsByName", findManyAnimalsByName);
 animalRoutes.get("/findAnimalsByCategory", findManyAnimalsByCategory);
 animalRoutes.put("/updateAnimalById", ensureAuthenticated, updateAnAnimalById);

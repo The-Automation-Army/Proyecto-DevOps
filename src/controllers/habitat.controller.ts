@@ -7,7 +7,7 @@ export const createNewHabitat = async (req:Request, res:Response) => {
     return res.status(201).json(habitat);
 };
 
-export const findAnAnimalById = async (req:Request, res:Response) => {
+export const findAnHabitatById = async (req:Request, res:Response) => {
     const {id} = req.body;
     const habitat = await findHabitatById(id);
     return res.status(200).json(habitat);

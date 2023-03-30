@@ -1,4 +1,4 @@
-import { Animal, Area, Category, Habitat, ZookeepersCaringHabitats } from "@prisma/client";
+import { Animal, Area, Category, ZookeepersCaringHabitats } from "@prisma/client";
 import prisma from "../../libs/prisma";
 
 //Creation of a habitat.

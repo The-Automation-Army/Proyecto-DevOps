@@ -25,7 +25,7 @@ export const updateASupplierById = async (req:Request, res:Response) => {
     return res.status(201).json(supplier);
 };
 
-export const deleteAnSupplierById = async (req:Request, res:Response) => {
+export const deleteASupplierById = async (req:Request, res:Response) => {
     const {id} = req.body;
     const supplier = await deleteSupplierById(id);
 };

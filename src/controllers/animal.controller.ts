@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { createAnimal, findAnimalById, findAnimalsByName, findAnimalsByCategory, updateAnimalById, deleteAnimalById } from "../services/animal.service";
 
 export const createNewAnimal = async (req:Request, res:Response) => {
-    const {name, gender, height, weight, category, diet, belongTo} = req.body;
-    const animal = await createAnimal(name, gender, height, weight, category, diet, belongTo)
+    const {name, gender, height, weight, category, diet, habitatId} = req.body;
+    const animal = await createAnimal(name, gender, height, weight, category, diet, habitatId)
     return res.status(201).json(animal);
 };
 
@@ -26,8 +26,8 @@ export const findManyAnimalsByCategory = async (req:Request, res:Response) => {
 };
 
 export const updateAnAnimalById = async (req:Request, res:Response) => {
-    const {id, name, gender, height, weight, category, diet, belongTo} = req.body;
-    const animal = await updateAnimalById(id, name, gender, height, weight, category, diet, belongTo);
+    const {id, name, gender, height, weight, category, diet, habitatId} = req.body;
+    const animal = await updateAnimalById(id, name, gender, height, weight, category, diet, habitatId);
     return res.status(200).json(animal);
 };
 

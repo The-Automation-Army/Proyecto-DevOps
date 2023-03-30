@@ -1,4 +1,4 @@
-import { Animal, Category, Diet, Habitat } from "@prisma/client";
+import { Animal, Category, Diet } from "@prisma/client";
 import prisma from "../../libs/prisma";
 
 //Creation of one animal.
