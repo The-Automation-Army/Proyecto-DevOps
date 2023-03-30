@@ -63,6 +63,7 @@ export async function updateAnimalById(id:number, modName:string, modGender:stri
             belongTo: { connect: {id: modHabitatId}},
         },
     });
+    return animal;
 }
 
 //Delete of an animal via is ID.

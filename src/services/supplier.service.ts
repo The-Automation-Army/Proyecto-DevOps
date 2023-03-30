@@ -49,6 +49,7 @@ export async function updateSupplierById(id:number, modName:string, modType:Type
             address: modAddress,
         },
     });
+    return supplier;
 };
 
 //Delete of a supplier via its ID.

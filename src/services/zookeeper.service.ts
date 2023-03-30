@@ -14,6 +14,7 @@ export async function createZookeeper(name:string, responsibility:Role, qualific
             },
         },
     });
+    return zookeeper;
 };
 
 //Read (query) of a zookeeper by his ID.
@@ -42,6 +43,7 @@ export async function updateZookeeperById(requestedId:number, modName:string, mo
             },
         },
     });
+    return zookeeper
 };
 
 //Delete of a zookeeper by his ID.

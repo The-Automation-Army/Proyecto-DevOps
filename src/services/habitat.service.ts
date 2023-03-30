@@ -91,6 +91,7 @@ export async function updateHabitatById(requestedId:number, modCategory:Category
             },
         },
     });
+    return habitat;
 };
 
 //Delete of an habitat by its ID.
