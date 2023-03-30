@@ -15,7 +15,7 @@ export const findAnZookeeperById = async (req:Request, res:Response) => {
 
 export const updateAnZookeeperById = async (req:Request, res:Response) => {
     const {id, name, responsibility, qualification, salary, authorId, habitats} = req.body;
-    const zookeeper = await updateZookeeperById(id, name, responsibility, qualification, salary, authorId, habitats);
+    const zookeeper = await updateZookeeperById(id, name, responsibility, qualification, salary, habitats);
     return res.status(200).json(zookeeper);
 };
 

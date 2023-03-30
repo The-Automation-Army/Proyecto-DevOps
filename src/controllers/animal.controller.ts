@@ -15,7 +15,7 @@ export const findAnAnimalById = async (req:Request, res:Response) => {
 
 export const findManyAnimalsByName = async (req:Request, res:Response) => {
     const {name} = req.body;
-    const animal = await findAnimalsByName;
+    const animal = await findAnimalsByName(name);
     return res.status(200).json(animal);
 };
 
