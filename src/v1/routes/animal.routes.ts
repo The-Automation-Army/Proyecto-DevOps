@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { createNewAnimal, findAnAnimalById, findManyAnimalsByName, findManyAnimalsByCategory, updateAnAnimalById, deleteAnAnimalById } from "../../controllers/animal.controller";
+import { createNewAnimal, findAnAnimalById, findManyAnimalsByName, findManyAnimalsByCategory, updateAnAnimalById, deleteAnAnimalById, findAnimals } from "../../controllers/animal.controller";
 import { ensureAuthenticated } from "../../middlewares/authentication";
 
 const animalRoutes = Router();
 
 animalRoutes.post("/newAnimal", ensureAuthenticated, createNewAnimal);
-animalRoutes.get("/findAnimalByID", findAnAnimalById);
+animalRoutes.get("/findAllAnimals", findAnimals);
+animalRoutes.get("/findAnimalById", findAnAnimalById);
 animalRoutes.get("/findAnimalsByName", findManyAnimalsByName);
 animalRoutes.get("/findAnimalsByCategory", findManyAnimalsByCategory);
 animalRoutes.put("/updateAnimalById", ensureAuthenticated, updateAnAnimalById);

@@ -15,6 +15,12 @@ export async function createSupplier(name:string, type:Type, email:string, telep
     return supplier;
 };
 
+//Read (query) of all suppliers.
+export async function findAllSuppliers() {
+    const suppliers = await prisma.supplier.findMany({});
+    return suppliers;
+}
+
 //Read (query) a unique supplier via its ID.
 export async function findSupplierById(id:number) {
     const supplier = await prisma.supplier.findUnique({

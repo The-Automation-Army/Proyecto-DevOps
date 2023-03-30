@@ -1,4 +1,4 @@
-import { Animal, Category, Diet, Habitat } from "@prisma/client";
+import { Animal, Category, Diet } from "@prisma/client";
 import prisma from "../../libs/prisma";
 
 //Creation of one animal.
@@ -16,6 +16,12 @@ export async function createAnimal(name:string, gender:string, height:number, we
     });
     return animal;
 };
+
+//Read (query) of all animals.
+export async function findAllAnimals() {
+    const animals = await prisma.animal.findMany({});
+    return animals;
+}
 
 //Read (query) of a unique animal via its ID.
 export async function findAnimalById(id:number) {

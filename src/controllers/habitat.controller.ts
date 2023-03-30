@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createHabitat, findHabitatById, findHabitatsByCategory, findHabitatsBySize, findHabitatsByCapacity, findHabitatsByArea, updateHabitatById, deleteHabitatById } from "../services/habitat.service";
+import { createHabitat, findHabitatById, findHabitatsByCategory, findHabitatsBySize, findHabitatsByCapacity, findHabitatsByArea, updateHabitatById, deleteHabitatById, findAllHabitats } from "../services/habitat.service";
 
 export const createNewHabitat = async (req:Request, res:Response) => {
     const {category, size, capacity, area, food_percentage, zookeepers, animals} = req.body;
@@ -7,7 +7,12 @@ export const createNewHabitat = async (req:Request, res:Response) => {
     return res.status(201).json(habitat);
 };
 
-export const findAnAnimalById = async (req:Request, res:Response) => {
+export const findHabitats = async () => {
+    const habitats = await findAllHabitats();
+    return habitats;
+}
+
+export const findAnHabitatById = async (req:Request, res:Response) => {
     const {id} = req.body;
     const habitat = await findHabitatById(id);
     return res.status(200).json(habitat);

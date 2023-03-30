@@ -1,4 +1,4 @@
-import { Animal, Area, Category, Habitat, ZookeepersCaringHabitats } from "@prisma/client";
+import { Animal, Area, Category, ZookeepersCaringHabitats } from "@prisma/client";
 import prisma from "../../libs/prisma";
 
 //Creation of a habitat.
@@ -20,6 +20,12 @@ export async function createHabitat(category:Category, size:number, capacity:num
     });
     return habitat;
 };
+
+//Read (query) of all habitats.
+export async function findAllHabitats() {
+    const habitats = await prisma.habitat.findMany({});
+    return habitats;
+}
 
 //Read (query) of an habitat by its ID.
 export async function findHabitatById(requestedId:number) {
