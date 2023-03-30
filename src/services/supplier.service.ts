@@ -1,4 +1,5 @@
 import { Supplier, Type } from "@prisma/client";
+import { type } from "os";
 import prisma from "../../libs/prisma";
 
 //Creation of one supplier.
@@ -35,12 +36,27 @@ async function findSupplierByName(suplierName:string) {
     return suppliers;
 ;}
 
-//Update of an supplier via its ID.
-async function updateSupplierById() {
-    //Developing.
-}
+//Update of a supplier via its ID.
+async function updateSupplierById(id:number, modName:string, modType:Type, modEmail:string, modTelephone:string, modAddress:string) {
+    const supplier = await prisma.supplier.update({
+        where: {
+            supplier_id: id,
+        },
+        data: {
+            name: modName,
+            type: modType,
+            email: modEmail,
+            telephone: modTelephone,
+            address: modAddress,
+        },
+    });
+};
 
-//Delete of an supplier via its ID.
-async function deleteSupplierById() {
-    //Developing.
+//Delete of a supplier via its ID.
+async function deleteSupplierById(id:number) {
+    const supplier = await prisma.supplier.delete({
+        where: {
+            supplier_id:id,
+        },
+    });
 }
