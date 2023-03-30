@@ -29,7 +29,6 @@ model Zookeeper {
 	salary    		Float
 	createdAt 		DateTime					@default(now())
 	updatedAt 		DateTime					@updatedAt
-	authorId   		Int
 	habitats		ZookeepersCaringHabitats[]
 }
 

@@ -1,10 +1,12 @@
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import { router } from "./routes";
+import logger from "morgan";
 
 const app = express();
 
 app.use(express.json());
+app.use(logger('dev'))
 app.use(router);
 app.use(
   (
