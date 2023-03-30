@@ -3,7 +3,7 @@ import { type } from "os";
 import prisma from "../../libs/prisma";
 
 //Creation of one supplier.
-async function createSupplier(name:string, type:Type, email:string, telephone:string, address:string) {
+export async function createSupplier(name:string, type:Type, email:string, telephone:string, address:string) {
     const supplier = await prisma.supplier.create({
         data: {
             name,
@@ -17,7 +17,7 @@ async function createSupplier(name:string, type:Type, email:string, telephone:st
 };
 
 //Read (query) a unique supplier via its ID.
-async function findSupplierById(id:number) {
+export async function findSupplierById(id:number) {
     const supplier = await prisma.supplier.findUnique({
         where: {
             supplier_id:id,
@@ -27,7 +27,7 @@ async function findSupplierById(id:number) {
 ;}
 
 //Read (query) of many suppliers via their names.
-async function findSupplierByName(suplierName:string) {
+export async function findSupplierByName(suplierName:string) {
     const suppliers = await prisma.supplier.findMany({
         where: {
             name:suplierName,
@@ -37,7 +37,7 @@ async function findSupplierByName(suplierName:string) {
 ;}
 
 //Update of a supplier via its ID.
-async function updateSupplierById(id:number, modName:string, modType:Type, modEmail:string, modTelephone:string, modAddress:string) {
+export async function updateSupplierById(id:number, modName:string, modType:Type, modEmail:string, modTelephone:string, modAddress:string) {
     const supplier = await prisma.supplier.update({
         where: {
             supplier_id: id,
@@ -53,7 +53,7 @@ async function updateSupplierById(id:number, modName:string, modType:Type, modEm
 };
 
 //Delete of a supplier via its ID.
-async function deleteSupplierById(id:number) {
+export async function deleteSupplierById(id:number) {
     const supplier = await prisma.supplier.delete({
         where: {
             supplier_id:id,
