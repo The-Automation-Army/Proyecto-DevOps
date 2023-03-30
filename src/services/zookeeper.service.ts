@@ -1,4 +1,4 @@
-import { Qualification, Role, Zookeeper, ZookeepersCaringHabitats } from "@prisma/client";
+import { Qualification, Role, ZookeepersCaringHabitats } from "@prisma/client";
 import prisma from "../../libs/prisma";
 
 //Creation of a zookeeper.
@@ -16,6 +16,12 @@ export async function createZookeeper(name:string, responsibility:Role, qualific
     });
     return zookeeper;
 };
+
+//Read (query) of all zookeepers.
+export async function findAllZookeepers() {
+    const zookeepers = await prisma.zookeeper.findMany({});
+    return zookeepers;
+}
 
 //Read (query) of a zookeeper by his ID.
 export async function findZookeeperById(requestedId:number) {

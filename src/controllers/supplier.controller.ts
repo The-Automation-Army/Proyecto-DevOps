@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
-import { createSupplier, findSupplierById, findSuppliersByName, updateSupplierById, deleteSupplierById} from "../services/supplier.service";
+import { createSupplier, findSupplierById, findSuppliersByName, updateSupplierById, deleteSupplierById, findAllSuppliers} from "../services/supplier.service";
 
 export const createNewSupplier = async (req:Request, res:Response) => {
     const {name, type, emaial, telephone, address} = req.body;
     const supplier = await createSupplier (name, type, emaial, telephone, address);
     return res.status(201).json(supplier);
 };
+
+export const findSuppliers = async () => {
+    const suppliers = await findAllSuppliers();
+    return suppliers;
+}
 
 export const findAnSupplierById = async (req:Request, res:Response) => {
     const {id} = req.body;

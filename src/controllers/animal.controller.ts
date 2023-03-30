@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
-import { createAnimal, findAnimalById, findAnimalsByName, findAnimalsByCategory, updateAnimalById, deleteAnimalById } from "../services/animal.service";
+import { createAnimal, findAnimalById, findAnimalsByName, findAnimalsByCategory, updateAnimalById, deleteAnimalById, findAllAnimals } from "../services/animal.service";
 
 export const createNewAnimal = async (req:Request, res:Response) => {
     const {name, gender, height, weight, category, diet, habitatId} = req.body;
     const animal = await createAnimal(name, gender, height, weight, category, diet, habitatId)
     return res.status(201).json(animal);
 };
+
+export const findAnimals = async () => {
+    const animals = await findAllAnimals();
+    return animals;
+}
 
 export const findAnAnimalById = async (req:Request, res:Response) => {
     const {id} = req.body;

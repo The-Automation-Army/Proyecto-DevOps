@@ -17,6 +17,12 @@ export async function createAnimal(name:string, gender:string, height:number, we
     return animal;
 };
 
+//Read (query) of all animals.
+export async function findAllAnimals() {
+    const animals = await prisma.animal.findMany({});
+    return animals;
+}
+
 //Read (query) of a unique animal via its ID.
 export async function findAnimalById(id:number) {
     const animal = await prisma.animal.findUnique({
