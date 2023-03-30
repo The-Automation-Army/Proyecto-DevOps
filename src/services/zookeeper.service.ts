@@ -59,4 +59,5 @@ export async function deleteZookeeperById(requestedId:number) {
             id: requestedId,
         },
     });
+    return zookeeper;
 };
