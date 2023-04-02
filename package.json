@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
+    "@types/morgan": "^1.9.4",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
