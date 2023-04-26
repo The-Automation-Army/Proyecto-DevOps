@@ -8,3 +8,11 @@ export interface IUserRequest {
   email: string;
   password: string;
 }
+
+export const defaultUserFields = {
+  id: true,
+  username: true,
+  email: true,
+  createdAt: true,
+  updatedAt: true,
+};

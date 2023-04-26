@@ -1,17 +1,19 @@
-import { User } from "@prisma/client";
 import prisma from "../../libs/prisma";
 import { JWT } from "../utils/jwt";
 import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
-import { ILoginRequest, IUserRequest } from "../dtos/user.dto";
+import {
+  ILoginRequest,
+  IUserRequest,
+  defaultUserFields,
+} from "../dtos/user.dto";
 
 export const getAllUsers = async () => {
-  try {
-    const allUsers: User[] = await prisma.user.findMany();
-    return allUsers;
-  } catch (error) {
-    throw new Error("Users are not found");
-  }
+  const allUsers = await prisma.user.findMany({
+    select: { ...defaultUserFields },
+  });
+
+  return allUsers;
 };
 
 export const authUser = async ({ email, password }: ILoginRequest) => {
@@ -22,12 +24,12 @@ export const authUser = async ({ email, password }: ILoginRequest) => {
   });
 
   if (!userAlreadyExists) {
-    throw new Error("Email or password incorrect!");
+    throw new Error("Incorrect email or password!");
   }
 
   const passwordMatch = await compare(password, userAlreadyExists.password);
   if (!passwordMatch) {
-    throw new Error("Email or password incorrect!");
+    throw new Error("Incorrect email or password!");
   }
 
   const token = sign({}, JWT.ACCESS_TOKEN, {
@@ -63,4 +65,38 @@ export const createUser = async ({
   });
 
   return user;
+};
+
+export const deleteUserById = async (userId: number) => {
+  const deletedUser = await prisma.user.delete({
+    where: {
+      id: userId,
+    },
+  });
+
+  return deletedUser;
+};
+
+export const getUserById = async (userId: number) => {
+  const findUser = await prisma.user.findFirst({
+    where: {
+      id: userId,
+    },
+    select: { ...defaultUserFields },
+  });
+
+  return findUser;
+};
+
+export const updateUserById = async (userId: number, username: string) => {
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      username,
+    },
+  });
+
+  return updatedUser;
 };
