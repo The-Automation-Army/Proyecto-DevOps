@@ -1,5 +1,4 @@
 import { describe, expect, it, vi } from "vitest";
-import prisma from "../libs/__mocks__/prisma";
 import {
   createUser,
   authUser,
