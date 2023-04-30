@@ -17,7 +17,7 @@ export const getAllUsers = async () => {
 };
 
 export const authUser = async ({ email, password }: ILoginRequest) => {
-  const userAlreadyExists = await prisma.user.findFirst({
+  const userAlreadyExists = await prisma.user.findUnique({
     where: {
       email,
     },
@@ -29,7 +29,7 @@ export const authUser = async ({ email, password }: ILoginRequest) => {
 
   const passwordMatch = await compare(password, userAlreadyExists.password);
   if (!passwordMatch) {
-    throw new Error("Incorrect email or password!");
+    throw new Error("Incorrect password!");
   }
 
   const token = sign({}, JWT.ACCESS_TOKEN, {
@@ -45,7 +45,7 @@ export const createUser = async ({
   email,
   password,
 }: IUserRequest) => {
-  const userAlreadyExists = await prisma.user.findFirst({
+  const userAlreadyExists = await prisma.user.findUnique({
     where: {
       email,
     },
@@ -78,7 +78,7 @@ export const deleteUserById = async (userId: number) => {
 };
 
 export const getUserById = async (userId: number) => {
-  const findUser = await prisma.user.findFirst({
+  const findUser = await prisma.user.findUnique({
     where: {
       id: userId,
     },
@@ -96,6 +96,9 @@ export const updateUserById = async (userId: number, username: string) => {
     data: {
       username,
     },
+    select: {
+      ...defaultUserFields
+    }
   });
 
   return updatedUser;
