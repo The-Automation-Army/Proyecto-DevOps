@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import prisma from "../../libs/__mocks__/prisma";
 
 export const UserFactory = {
@@ -20,7 +21,7 @@ export const UserFactory = {
   },
   find: (attrs = {}) => {
     const userMock = UserFactory.build(attrs);
-    prisma.user.findFirst.mockResolvedValue(userMock);
+    prisma.user.findUnique.mockResolvedValue(userMock);
     return userMock;
   },
   findAll: () => {
