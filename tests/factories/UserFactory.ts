@@ -1,4 +1,3 @@
-import { hash } from "bcryptjs";
 import prisma from "../../libs/__mocks__/prisma";
 
 export const UserFactory = {

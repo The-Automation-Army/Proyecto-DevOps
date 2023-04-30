@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { findManySuppliersByName } from "../../controllers/supplier.controller";
 import { Commons } from "./Commons";
+import { findManySuppliersByName } from "../../controllers/supplier.controller";
 const searchRoutes = Router();
 
 searchRoutes.get("/suppliers", findManySuppliersByName);
