@@ -1,42 +1,48 @@
 import { Request, Response } from "express";
-import { createAnimal, findAnimalById, findAnimalsByName, findAnimalsByCategory, updateAnimalById, deleteAnimalById, findAllAnimals } from "../services/animal.service";
+import * as AnimalService from "../services/animal.service";
+import { BaseAnimal } from "../dtos/animal.dto";
 
-export const createNewAnimal = async (req:Request, res:Response) => {
-    const {name, gender, height, weight, category, diet, habitatId} = req.body;
-    const animal = await createAnimal(name, gender, height, weight, category, diet, habitatId)
+export const getAllAnimals = async (_req: Request, res: Response) => {
+  const animals = await AnimalService.findAll();
+  return res.status(200).json(animals);
+};
+
+export const getOneAnimal = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const animal = await AnimalService.find(id);
+  if (!animal) {
+    return res.status(404).json({ message: "Animal not found" });
+  }
+  return res.status(200).json(animal);
+};
+
+export const createNewAnimal = async (req: Request, res: Response) => {
+  const newAnimal: BaseAnimal = req.body;
+  try {
+    const animal = await AnimalService.create(newAnimal);
     return res.status(201).json(animal);
+  } catch (error) {
+    return res.status(400).json({ message: "Missing or incorrect fields" });
+  }
 };
 
-export const findAnimals = async () => {
-    const animals = await findAllAnimals();
-    return animals;
-}
-
-export const findAnAnimalById = async (req:Request, res:Response) => {
-    const {id} = req.body;
-    const animal = await findAnimalById(id);
+export const updateOneAnimal = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const animalUpdate = req.body;
+  try {
+    const animal = await AnimalService.update(id, animalUpdate);
     return res.status(200).json(animal);
+  } catch (error) {
+    return res.status(404).json({ message: "Animal not found" });
+  }
 };
 
-export const findManyAnimalsByName = async (req:Request, res:Response) => {
-    const {name} = req.body;
-    const animal = await findAnimalsByName(name);
-    return res.status(200).json(animal);
+export const deleteOneAnimal = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  try {
+    await AnimalService.remove(id);
+    res.status(200).json({ message: "Animal deleted" });
+  } catch (error) {
+    res.status(404).json({ message: "Animal not found" });
+  }
 };
-
-export const findManyAnimalsByCategory = async (req:Request, res:Response) => {
-    const {category} = req.body;
-    const animal = await findAnimalsByCategory(category);
-    return res.status(200).json(animal);
-};
-
-export const updateAnAnimalById = async (req:Request, res:Response) => {
-    const {id, name, gender, height, weight, category, diet, habitatId} = req.body;
-    const animal = await updateAnimalById(id, name, gender, height, weight, category, diet, habitatId);
-    return res.status(200).json(animal);
-};
-
-export const deleteAnAnimalById = async (req:Request, res:Response) => {
-    const {id} = req.body;
-    await deleteAnimalById(id);
-}
