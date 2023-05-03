@@ -18,20 +18,20 @@ export const SupplierFactory = {
     prisma.supplier.create.mockResolvedValue(supplierMock);
     return supplierMock;
   },
-  finAll: () => {
+  findAll: () => {
     const suppliers = [
-      SupplierFactory.build({ supplier_id: 1, email: "john@supplier.com" }),
-      SupplierFactory.build({ supplier_id: 2, email: "rich@supplier.com" }),
+      SupplierFactory.build({ id: 1, email: "john@supplier.com" }),
+      SupplierFactory.build({ id: 2, email: "rich@supplier.com" }),
     ];
     prisma.supplier.findMany.mockResolvedValue(suppliers);
     return suppliers;
   },
-  findById: (attrs = {}) => {
+  find: (attrs = {}) => {
     const supplier = SupplierFactory.create(attrs);
     prisma.supplier.findUnique.mockResolvedValue(supplier);
     return supplier;
   },
-  findByName: (attrs = {}) => {
+  findBy: (attrs = {}) => {
     const suppliers = [
       SupplierFactory.build({
         id: 4,

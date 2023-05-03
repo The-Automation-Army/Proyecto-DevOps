@@ -8,7 +8,7 @@ import {
   defaultUserFields,
 } from "../dtos/user.dto";
 
-export const getAllUsers = async () => {
+export const findAll = async () => {
   const allUsers = await prisma.user.findMany({
     select: { ...defaultUserFields },
   });
@@ -16,7 +16,7 @@ export const getAllUsers = async () => {
   return allUsers;
 };
 
-export const authUser = async ({ email, password }: ILoginRequest) => {
+export const login = async ({ email, password }: ILoginRequest) => {
   const userAlreadyExists = await prisma.user.findUnique({
     where: {
       email,
@@ -40,11 +40,7 @@ export const authUser = async ({ email, password }: ILoginRequest) => {
   return token;
 };
 
-export const createUser = async ({
-  username,
-  email,
-  password,
-}: IUserRequest) => {
+export const create = async ({ username, email, password }: IUserRequest) => {
   const userAlreadyExists = await prisma.user.findUnique({
     where: {
       email,
@@ -67,7 +63,7 @@ export const createUser = async ({
   return user;
 };
 
-export const deleteUserById = async (userId: number) => {
+export const remove = async (userId: number) => {
   const deletedUser = await prisma.user.delete({
     where: {
       id: userId,
@@ -77,7 +73,7 @@ export const deleteUserById = async (userId: number) => {
   return deletedUser;
 };
 
-export const getUserById = async (userId: number) => {
+export const find = async (userId: number) => {
   const findUser = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -88,7 +84,7 @@ export const getUserById = async (userId: number) => {
   return findUser;
 };
 
-export const updateUserById = async (userId: number, username: string) => {
+export const update = async (userId: number, username: string) => {
   const updatedUser = await prisma.user.update({
     where: {
       id: userId,
@@ -97,8 +93,8 @@ export const updateUserById = async (userId: number, username: string) => {
       username,
     },
     select: {
-      ...defaultUserFields
-    }
+      ...defaultUserFields,
+    },
   });
 
   return updatedUser;

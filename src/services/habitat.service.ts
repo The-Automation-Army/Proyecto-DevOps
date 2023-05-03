@@ -1,110 +1,71 @@
-import { Animal, Area, Category, ZookeepersCaringHabitats } from "@prisma/client";
 import prisma from "../../libs/prisma";
+import { IHabitat } from "../dtos/habitat.dto";
 
 //Creation of a habitat.
-export async function createHabitat(category:Category, size:number, capacity:number, area:Area, food_percentage:number, zookeepersInfo:ZookeepersCaringHabitats[], animalsInfo:Animal[]) {
-    const habitat = await prisma.habitat.create({
-        data: {
-            category,
-            size,
-            capacity,
-            area,
-            food_percentage,
-            zookeepers: {
-                create: zookeepersInfo,
-            },
-            animals: {
-                create: animalsInfo,
-            },
-        },
-    });
-    return habitat;
+export const create = async (habitatData: IHabitat) => {
+  const { size, capacity, area, foodPercentage, zookeepers, animals } =
+    habitatData;
+  const newHabitat = await prisma.habitat.create({
+    data: {
+      size: size,
+      capacity: capacity,
+      area: area,
+      foodPercentage: foodPercentage,
+      zookeepers: {
+        create: zookeepers,
+      },
+      animals: {
+        create: animals,
+      },
+    },
+  });
+  return newHabitat;
 };
 
 //Read (query) of all habitats.
-export async function findAllHabitats() {
-    const habitats = await prisma.habitat.findMany({});
-    return habitats;
-}
+export const findAll = async () => {
+  const habitats = await prisma.habitat.findMany({});
+  return habitats;
+};
 
 //Read (query) of an habitat by its ID.
-export async function findHabitatById(requestedId:number) {
-    const habitat = await prisma.habitat.findUnique({
-        where: {
-            id:requestedId,
-        },
-    });
-    return habitat;
-};
-
-//Read (query) of many habitats by their categorys.
-export async function findHabitatsByCategory(requestedCategory:Category) {
-    const habitat = await prisma.habitat.findMany({
-        where: {
-            category: requestedCategory,
-        },
-    });
-    return habitat;
-};
-
-//Read (query) of many habitats by their sizes.
-export async function findHabitatsBySize(requestedSize:number) {
-    const habitat = await prisma.habitat.findMany({
-        where: {
-            size: requestedSize,
-        },
-    });
-    return habitat;
-};
-
-//Read (query) of many habitats by their capacities.
-export async function findHabitatsByCapacity(requestedCapacity:number) {
-    const habitat = await prisma.habitat.findMany({
-        where: {
-            capacity: requestedCapacity,
-        },
-    });
-    return habitat;
-};
-
-//Read (query) of many habitats by their areas.
-export async function findHabitatsByArea(requestedArea:Area) {
-    const habitat = await prisma.habitat.findMany({
-        where: {
-            area: requestedArea,
-        },
-    });
-    return habitat;
+export const find = async (habitatId: number) => {
+  const habitat = await prisma.habitat.findUnique({
+    where: {
+      id: habitatId,
+    },
+  });
+  return habitat;
 };
 
 //Update of an habitat by its ID.
-export async function updateHabitatById(requestedId:number, modCategory:Category, modSize:number, modCapacity:number, modArea:Area, modFood_percentage:number, modZookeepersInfo:ZookeepersCaringHabitats[], modAnimalsInfo:Animal[]) {
-    const habitat = await prisma.habitat.update({
-        where: {
-            id: requestedId
-        },
-        data: {
-            category: modCategory,
-            size: modSize,
-            capacity: modCapacity,
-            area: modArea,
-            food_percentage: modFood_percentage,
-            zookeepers: {
-                create: modZookeepersInfo,
-            },
-            animals: {
-                create: modAnimalsInfo,
-            },
-        },
-    });
-    return habitat;
+export const update = async (habitatId: number, habitat: Partial<IHabitat>) => {
+  const updateHabitat = await prisma.habitat.update({
+    where: {
+      id: habitatId,
+    },
+    data: {
+      area: habitat.area,
+      capacity: habitat.capacity,
+      size: habitat.size,
+      animals: {
+        create: habitat.animals,
+      },
+      zookeepers: {
+        create: habitat.zookeepers,
+      },
+    },
+  });
+  return updateHabitat;
 };
 
 //Delete of an habitat by its ID.
-export async function deleteHabitatById(requestedId:number) {
-    const habitat = await prisma.habitat.delete({
-        where: {
-            id: requestedId,
-        },
-    });
+export const remove = async (requestedId: number) => {
+  const habitat = await prisma.habitat.delete({
+    where: {
+      id: requestedId,
+    },
+  });
+
+  return habitat;
 };
