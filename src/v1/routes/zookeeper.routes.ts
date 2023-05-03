@@ -1,13 +1,16 @@
 import { Router } from "express";
-import { createNewZookeeper, deleteAZookeeperById, findAZookeeperById, findZookeepers, updateAZookeeperById } from "../../controllers/zookeeper.controller";
+import { Commons } from "./Commons";
 import { ensureAuthenticated } from "../../middlewares/authentication";
+import * as ZookeeperController from "../../controllers/zookeeper.controller";
 
 const zookeeperRoutes = Router();
 
-zookeeperRoutes.post("/newZookeeper", ensureAuthenticated, createNewZookeeper);
-zookeeperRoutes.get("findAllZookeepers", findZookeepers);
-zookeeperRoutes.get("/findZookeeperById", findAZookeeperById);
-zookeeperRoutes.put("/updateZookeeperById", ensureAuthenticated, updateAZookeeperById);
-zookeeperRoutes.delete("/deleteZookeeperById", ensureAuthenticated, deleteAZookeeperById);
+zookeeperRoutes
+  .get("/", ensureAuthenticated, ZookeeperController.getAllZookeepers)
+  .get("/:id", ensureAuthenticated, ZookeeperController.getOneZookeeper)
+  .post("/", ensureAuthenticated, ZookeeperController.createNewZookeeper)
+  .put("/:id", ensureAuthenticated, ZookeeperController.updateOneZookeeper)
+  .delete("/:id", ensureAuthenticated, ZookeeperController.deleteOneZookeeper)
+  .all("/", Commons.methodNotAllowed);
 
 export { zookeeperRoutes };
