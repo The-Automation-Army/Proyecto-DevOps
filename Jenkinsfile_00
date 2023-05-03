@@ -6,6 +6,10 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'npm ci'
+                withCredentials([file(credentialsId: 'env-vars-zoo-api', variable: 'env-file')]) {
+                    sh "cp \$env-file ./.env"
+                }
+                sh 'ls'
             }
         }
         stage('Test') {
