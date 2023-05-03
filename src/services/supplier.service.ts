@@ -1,68 +1,63 @@
-import { Supplier, Type } from "@prisma/client";
 import prisma from "../../libs/prisma";
+import { ISupplierRequest } from "../dtos/supplier.dto";
 
 //Creation of one supplier.
-export async function createSupplier(name:string, type:Type, email:string, telephone:string, address:string) {
-    const supplier = await prisma.supplier.create({
-        data: {
-            name,
-            type,
-            email,
-            telephone,
-            address
-        },
-    });
-    return supplier;
-};
+export async function createSupplier(supplier: ISupplierRequest) {
+  const newSupplier = await prisma.supplier.create({
+    data: supplier,
+  });
+  return newSupplier;
+}
 
 //Read (query) of all suppliers.
 export async function findAllSuppliers() {
-    const suppliers = await prisma.supplier.findMany({});
-    return suppliers;
+  const suppliers = await prisma.supplier.findMany({});
+  return suppliers;
 }
 
 //Read (query) a unique supplier via its ID.
-export async function findSupplierById(id:number) {
-    const supplier = await prisma.supplier.findUnique({
-        where: {
-            supplier_id:id,
-        },
-    });
-    return supplier;
-;}
+export async function findSupplierById(supplierId: number) {
+  const findSupplier = await prisma.supplier.findUnique({
+    where: {
+      id: supplierId,
+    },
+  });
+  return findSupplier;
+}
 
 //Read (query) of many suppliers via their names.
-export async function findSuppliersByName(suplierName:string) {
-    const suppliers = await prisma.supplier.findMany({
-        where: {
-            name:suplierName,
-        },
-    });
-    return suppliers;
-;}
+export async function findSuppliersByName(term: string) {
+  const suppliers = await prisma.supplier.findMany({
+    where: {
+      name: {
+        contains: term,
+        mode: "insensitive",
+      },
+    },
+  });
+  return suppliers;
+}
 
 //Update of a supplier via its ID.
-export async function updateSupplierById(id:number, modName:string, modType:Type, modEmail:string, modTelephone:string, modAddress:string) {
-    const supplier = await prisma.supplier.update({
-        where: {
-            supplier_id: id,
-        },
-        data: {
-            name: modName,
-            type: modType,
-            email: modEmail,
-            telephone: modTelephone,
-            address: modAddress,
-        },
-    });
-    return supplier;
-};
+export async function updateSupplierById(
+  fieldsToUpdate: Partial<ISupplierRequest>
+) {
+  const supplier = await prisma.supplier.update({
+    where: {
+      id: fieldsToUpdate.id,
+    },
+    data: { ...fieldsToUpdate },
+  });
+  return supplier;
+}
 
 //Delete of a supplier via its ID.
-export async function deleteSupplierById(id:number) {
-    const supplier = await prisma.supplier.delete({
-        where: {
-            supplier_id:id,
-        },
-    });
-};
+export async function deleteSupplierById(supplierId: number) {
+  const deletedSupplier = await prisma.supplier.delete({
+    where: {
+      id: supplierId,
+    },
+  });
+
+  return deletedSupplier;
+}

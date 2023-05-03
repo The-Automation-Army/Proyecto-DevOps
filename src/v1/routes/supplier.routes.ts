@@ -1,14 +1,22 @@
 import { Router } from "express";
-import { createNewSupplier, deleteASupplierById, findAnSupplierById, findManySuppliersByName, findSuppliers, updateASupplierById } from "../../controllers/supplier.controller";
+import {
+  createNewSupplier,
+  deleteASupplierById,
+  findAnSupplierById,
+  findSuppliers,
+  updateASupplierById,
+} from "../../controllers/supplier.controller";
 import { ensureAuthenticated } from "../../middlewares/authentication";
+import { Commons } from "./Commons";
 
 const supplierRoutes = Router();
 
-supplierRoutes.post("/newSupplier", ensureAuthenticated, createNewSupplier);
-supplierRoutes.get("/finAllSuppliers", findSuppliers);
-supplierRoutes.get("/findSupplierById", ensureAuthenticated, findAnSupplierById);
-supplierRoutes.get("/findaSuppliersByName", findManySuppliersByName);
-supplierRoutes.put("/updateSupplierById", ensureAuthenticated, updateASupplierById);
-supplierRoutes.delete("/deleteSupplierById", ensureAuthenticated, deleteASupplierById);
+supplierRoutes
+  .get("/", findSuppliers)
+  .get("/:id", ensureAuthenticated, findAnSupplierById)
+  .post("/", ensureAuthenticated, createNewSupplier)
+  .put("/:id", ensureAuthenticated, updateASupplierById)
+  .delete("/:id", ensureAuthenticated, deleteASupplierById)
+  .all("/", Commons.methodNotAllowed);
 
 export { supplierRoutes };

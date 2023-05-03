@@ -1,5 +1,4 @@
 import { describe, expect, it, vi } from "vitest";
-import prisma from "../libs/__mocks__/prisma";
 import {
   createUser,
   authUser,
@@ -9,6 +8,7 @@ import {
   updateUserById,
 } from "../src/services/user.service";
 import { UserFactory } from "./factories/UserFactory";
+import { hash } from "bcryptjs";
 
 vi.mock("../libs/prisma");
 
@@ -21,12 +21,11 @@ describe("User service", () => {
   });
 
   it("authUser should return the generated token", async () => {
-    UserFactory.find({
-      password: "$2a$08$80x7oi/B003dzs82KIs.BeThaj7C/MCUzeCClLQAFnxf1xVOZP8De",
-    });
+    const encryptedPassword = await hash("strong-password", 8);
+    UserFactory.find({ password: encryptedPassword });
     const token = await authUser({
-      email: "rich@example.com",
-      password: "richPassword",
+      email: "fake@example.com",
+      password: "strong-password",
     });
 
     expect(token).toContain("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9");
