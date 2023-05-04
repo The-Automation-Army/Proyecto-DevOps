@@ -3,6 +3,9 @@ pipeline {
     stages {
         stage('Build, Package & Tag') {
             steps {
+                withCredentials([file(credentialsId: 'env-vars-zoo-api', variable: 'env_file')]) {
+                    writeFile file: '.env', text: readFile(env_file)
+                }
                 sh '''BRANCH=$(echo $GIT_BRANCH | cut -b 8-11)
                 docker build -t animales-bonitos-$BRANCH:1.0.0-$BUILD_ID .'''
             }
