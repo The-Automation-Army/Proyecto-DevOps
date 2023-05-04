@@ -1,0 +1,26 @@
+pipeline {
+    agent {
+        docker { image 'node:18.15-alpine' }
+    }
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+                withCredentials([file(credentialsId: 'env-vars-zoo-api', variable: 'env_file')]) {
+                    writeFile file: '.env', text: readFile(env_file)
+                }
+                sh 'ls'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm t'
+            }
+        }
+    }
+    post {
+        success {
+            build 'zoo-animales-bonitos-cicd-pl-01'
+        }
+    }
+}

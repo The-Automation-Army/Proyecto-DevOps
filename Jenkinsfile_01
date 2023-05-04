@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build, Package & Tag') {
+            steps {
+                withCredentials([file(credentialsId: 'env-vars-zoo-api', variable: 'env_file')]) {
+                    writeFile file: '.env', text: readFile(env_file)
+                }
+                sh '''BRANCH=$(echo $GIT_BRANCH | cut -b 8-11)
+                docker build -t animales-bonitos-$BRANCH:1.0.0-$BUILD_ID .'''
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh '''BRANCH=$(echo $GIT_BRANCH | cut -b 8-11)
+                docker stop zoo-api
+                docker run --rm --name zoo-api --detach --network zoo-network -p 3000:3000 animales-bonitos-$BRANCH:1.0.0-$BUILD_ID'''
+            }
+        }
+    }
+}
