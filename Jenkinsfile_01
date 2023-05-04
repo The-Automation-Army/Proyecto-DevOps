@@ -3,15 +3,14 @@ pipeline {
     stages {
         stage('Build, Package & Tag') {
             steps {
-                sh '''BRANCH=$(echo $GIT_BRANCH | cut -b 8-11)
-                docker build -t animales-bonitos:0.0.$BUILD_ID-$BRANCH .'''
+                sh "docker build -t animales-bonitos-${env.GIT_BRANCH}:1.0.0-${env.BUILD_NUMBER} ."
             }
         }
         stage('Deploy') {
             steps {
                 sh 'docker stop zoo-api'
                 sh 'docker rm zoo-api'
-                sh 'docker run --name zoo-api --detach --network zoo-network -p 3000:3000 animales-bonitos:0.0.$BUILD_ID-$BRANCH'
+                sh "docker run --name zoo-api --detach --network zoo-network -p 3000:3000 animales-bonitos-${env.GIT_BRANCH}:1.0.0-${env.BUILD_NUMBER}"
             }
         }
     }
