@@ -36,11 +36,10 @@ model Zookeeper {
 
 model Habitat {
   id              Int                        @id @unique @default(autoincrement())
-  category        Category
   size            Float
   capacity        Int
   area            Area
-  food_percentage Float
+  foodPercentage Float
   zookeepers      ZookeepersCaringHabitats[]
   animals         Animal[]
 
@@ -73,12 +72,12 @@ model Supplier {
 }
 
 model ZookeepersCaringHabitats {
-  zookeeper   Zookeeper @relation(fields: [zookepeerId], references: [id])
-  zookepeerId Int
-  habitat     Habitat   @relation(fields: [habitadId], references: [id])
-  habitadId   Int
+  zookeeper   Zookeeper @relation(fields: [zookeeperId], references: [id])
+  zookeeperId Int
+  habitat     Habitat   @relation(fields: [habitatId], references: [id])
+  habitatId   Int
 
-  @@id([zookepeerId, habitadId])
+  @@id([zookeeperId, habitatId])
 }
 
 enum Role {

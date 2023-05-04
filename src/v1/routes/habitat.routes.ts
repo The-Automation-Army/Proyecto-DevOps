@@ -1,17 +1,16 @@
 import { Router } from "express";
-import { createNewHabitat, deleteAnHabitatById, findAnHabitatById, findHabitats, findManyHabitatsByArea, findManyHabitatsByCapacity, findManyHabitatsByCategory, findManyHabitatsBySize, updateAnHabitatById } from "../../controllers/habitat.controller";
+import * as HabitatController from "../../controllers/habitat.controller";
+import { Commons } from "./Commons";
 import { ensureAuthenticated } from "../../middlewares/authentication";
 
 const habitatRoutes = Router();
 
-habitatRoutes.post("/newHabitat", ensureAuthenticated, createNewHabitat);
-habitatRoutes.get("/findAllHabitats", findHabitats);
-habitatRoutes.get("/findHabitatById", findAnHabitatById);
-habitatRoutes.get("/findHabitatsByCategory", findManyHabitatsByCategory);
-habitatRoutes.get("/findHabitatsBySize", findManyHabitatsBySize);
-habitatRoutes.get("/findHabitatsByCapacity", findManyHabitatsByCapacity);
-habitatRoutes.get("/findHabitatsByArea", findManyHabitatsByArea);
-habitatRoutes.put("/updateHabitatById", ensureAuthenticated, updateAnHabitatById);
-habitatRoutes.delete("/deleteHabitat", ensureAuthenticated, deleteAnHabitatById)
+habitatRoutes
+  .get("/", ensureAuthenticated, HabitatController.getAllHabitats)
+  .get("/:id", ensureAuthenticated, HabitatController.getOneHabitat)
+  .post("/", ensureAuthenticated, HabitatController.createNewHabitat)
+  .put("/:id", ensureAuthenticated, HabitatController.updateOneHabitat)
+  .delete("/:id", ensureAuthenticated, HabitatController.deleteOneHabitat)
+  .all("/", Commons.methodNotAllowed);
 
 export { habitatRoutes };

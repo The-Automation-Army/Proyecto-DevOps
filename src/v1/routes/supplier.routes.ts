@@ -1,22 +1,16 @@
 import { Router } from "express";
-import {
-  createNewSupplier,
-  deleteASupplierById,
-  findAnSupplierById,
-  findSuppliers,
-  updateASupplierById,
-} from "../../controllers/supplier.controller";
-import { ensureAuthenticated } from "../../middlewares/authentication";
 import { Commons } from "./Commons";
+import { ensureAuthenticated } from "../../middlewares/authentication";
+import * as SupplierController from "../../controllers/supplier.controller";
 
 const supplierRoutes = Router();
 
 supplierRoutes
-  .get("/", findSuppliers)
-  .get("/:id", ensureAuthenticated, findAnSupplierById)
-  .post("/", ensureAuthenticated, createNewSupplier)
-  .put("/:id", ensureAuthenticated, updateASupplierById)
-  .delete("/:id", ensureAuthenticated, deleteASupplierById)
+  .get("/", ensureAuthenticated, SupplierController.getAllSuppliers)
+  .get("/:id", ensureAuthenticated, SupplierController.getOneSupplier)
+  .post("/", ensureAuthenticated, SupplierController.createNewSupplier)
+  .put("/:id", ensureAuthenticated, SupplierController.updateOneSupplier)
+  .delete("/:id", ensureAuthenticated, SupplierController.deleteOneSupplier)
   .all("/", Commons.methodNotAllowed);
 
 export { supplierRoutes };

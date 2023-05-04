@@ -1,23 +1,20 @@
 import { Router } from "express";
-import {
-  getAll,
-  getUser,
-  deleteUser,
-  signIn,
-  signUp,
-  updateUser,
-} from "../../controllers/user.controller";
-import { ensureAuthenticated } from "../../middlewares/authentication";
 import { Commons } from "./Commons";
+import { ensureAuthenticated } from "../../middlewares/authentication";
+import * as UserController from "../../controllers/user.controller";
 
 const userRoutes = Router();
 
-userRoutes.post("/login", signIn);
-userRoutes.post("/register", signUp);
-userRoutes.get("/users", ensureAuthenticated, getAll);
-userRoutes.get("/users/:id", ensureAuthenticated, getUser);
-userRoutes.delete("/users/:id", ensureAuthenticated, deleteUser);
-userRoutes.put("/users/:id", ensureAuthenticated, updateUser);
+userRoutes.post("/login", UserController.signIn);
+userRoutes.post("/register", UserController.createNewUser);
+userRoutes.get("/users", ensureAuthenticated, UserController.getAllUsers);
+userRoutes.get("/users/:id", ensureAuthenticated, UserController.getOneUser);
+userRoutes.put("/users/:id", ensureAuthenticated, UserController.updateOneUser);
+userRoutes.delete(
+  "/users/:id",
+  ensureAuthenticated,
+  UserController.deleteOneUser
+);
 userRoutes.all("/users", Commons.methodNotAllowed);
 
 export { userRoutes };
