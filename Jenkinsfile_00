@@ -18,4 +18,9 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            build 'zoo-animales-bonitos-cicd-pl-01'
+        }
+    }
 }
