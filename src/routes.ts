@@ -5,8 +5,10 @@ import { habitatRoutes } from "./v1/routes/habitat.routes";
 import { supplierRoutes } from "./v1/routes/supplier.routes";
 import { zookeeperRoutes } from "./v1/routes/zookeeper.routes";
 import { searchRoutes } from "./v1/routes/search.routes";
+import { Commons } from "./v1/routes/Commons";
 
 const router = Router();
+router.use(Commons.apiLogger);
 router.use(userRoutes);
 router.use("/animals", animalRoutes);
 router.use("/habitats", habitatRoutes);
