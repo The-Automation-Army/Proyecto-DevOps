@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as UserService from "../services/user.service";
 import { logger } from "../utils/logger";
-import { debugApi, warnEntityNotFound } from "../utils/loggerCases";
+import { debugApi, debugRequestBody, warnEntityNotFound } from "../utils/loggerCases";
 
 export const getAllUsers = async (req: Request, res: Response) => {
   debugApi("getAllUsers", req.params);
@@ -24,7 +24,7 @@ export const getOneUser = async (req: Request, res: Response) => {
 
 export const createNewUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
-  debugApi("createNewUser", req.params, { username, email });
+  debugRequestBody("createNewUser", req.params, { username, email, password });
   try {
     const user = await UserService.create({
       username,
@@ -33,8 +33,8 @@ export const createNewUser = async (req: Request, res: Response) => {
     });
     return res.status(201).json(user);
   } catch (error: any) {
-    logger.warn(error);
-    return res.status(400).json({ message: error.message });
+    logger.warn("Missing or incorrect fields");
+    return res.status(400).json({ message: "Missing or incorrect fields" });
   }
 };
 

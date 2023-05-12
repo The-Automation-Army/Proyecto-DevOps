@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as SupplierService from "../services/supplier.service";
-import { debugApi, warnEntityNotFound } from "../utils/loggerCases";
+import { debugApi, debugRequestBody, warnEntityNotFound } from "../utils/loggerCases";
 import { logger } from "../utils/logger";
 
 export const getAllSuppliers = async (req: Request, res: Response) => {
@@ -22,13 +22,12 @@ export const getOneSupplier = async (req: Request, res: Response) => {
 
 export const createNewSupplier = async (req: Request, res: Response) => {
   const newSupplier = req.body;
-  const { name, type, email, address } = req.body;
-  debugApi("createNewSupplier", req.params, { name, type, email, address });
+  debugRequestBody("createNewSupplier", req.params, newSupplier);
   try {
     const supplier = await SupplierService.create(newSupplier);
     return res.status(201).json(supplier);
   } catch (error) {
-    logger.warn(error);
+    logger.warn("Missing or incorrect fields");
     return res.status(400).json({ message: "Missing or incorrect fields" });
   }
 };
@@ -36,7 +35,7 @@ export const createNewSupplier = async (req: Request, res: Response) => {
 export const updateOneSupplier = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const updateSupplier = req.body;
-  debugApi("updateOneSupplier", req.params, updateSupplier);
+  debugRequestBody("updateOneSupplier", req.params, updateSupplier);
   try {
     const supplier = await SupplierService.update(id, updateSupplier);
     return res.status(200).json(supplier);
