@@ -1,8 +1,8 @@
-import express, { NextFunction, Request, Response } from "express";
-import "express-async-errors";
+import express from "express";
 import { router } from "./routes";
 import { logger } from "./utils/logger";
 import { errorHandler } from "./middlewares/errorHandler";
+import "express-async-errors";
 
 const app = express();
 app.use(express.json());
