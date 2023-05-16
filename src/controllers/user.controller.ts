@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
 import * as UserService from "../services/user.service";
 import { logger } from "../utils/logger";
-import { debugApi, debugRequestBody, warnEntityNotFound } from "../utils/loggerCases";
+import {
+  debugApi,
+  debugRequestBody,
+  warnEntityNotFound,
+} from "../utils/loggerCases";
 
 export const getAllUsers = async (req: Request, res: Response) => {
   debugApi("getAllUsers", req.params);
@@ -46,7 +50,7 @@ export const signIn = async (req: Request, res: Response) => {
       email,
       password,
     });
-    return res.status(200).json(token);
+    return res.status(200).json({ token: token });
   } catch (error: any) {
     logger.warn(error);
     return res.status(400).json({ message: error.message });
