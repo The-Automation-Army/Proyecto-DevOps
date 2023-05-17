@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as ZookeeperService from "../services/zookeeper.service";
-import { debugApi, warnEntityNotFound } from "../utils/loggerCases";
+import { debugApi, debugRequestBody, warnEntityNotFound } from "../utils/loggerCases";
 import { logger } from "../utils/logger";
 
 export const getAllZookeepers = async () => {
@@ -22,13 +22,12 @@ export const getOneZookeeper = async (req: Request, res: Response) => {
 
 export const createNewZookeeper = async (req: Request, res: Response) => {
   const newZookeeper = req.body;
-  const { name, type, email, address } = req.body;
-  debugApi("createNewZookeeper", req.params, { name, type, email, address });
+  debugRequestBody("createNewZookeeper", req.params, newZookeeper);
   try {
     const zookeeper = await ZookeeperService.create(newZookeeper);
     return res.status(201).json(zookeeper);
   } catch (error) {
-    logger.warn(error);
+    logger.warn("Invalid or missing fields");
     return res.status(400).json({ message: "Invalid or missing fields" });
   }
 };
@@ -36,7 +35,7 @@ export const createNewZookeeper = async (req: Request, res: Response) => {
 export const updateOneZookeeper = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const updateZookeeper = req.body;
-  debugApi("updateOneZookeeper", req.params, updateZookeeper);
+  debugRequestBody("updateOneZookeeper", req.params, updateZookeeper);
   try {
     const zookeeper = await ZookeeperService.update(id, updateZookeeper);
     return res.status(200).json(zookeeper);

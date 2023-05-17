@@ -13,9 +13,9 @@ export class Commons {
 
   static apiLogger = (req: Request, res: Response, next: NextFunction) => {
     logger.info(
-      `METHOD: ${req.method}, URL: ${req.url}, QUERYPARAMS: ${JSON.stringify(
+      `(ZOO APP) Method: ${req.method}, URL: ${req.url}, Query Parameters: ${JSON.stringify(
         req.params
-      )}, HEADERS: ${JSON.stringify(req.headers)}`
+      )}, Headers: ${JSON.stringify(req.headers)}`
     );
     return next();
   };

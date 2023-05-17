@@ -10,7 +10,7 @@ import { logger } from "../utils/logger";
 export const findAnimals = async (req: Request, res: Response) => {
   const animalQueryParams: AnimalQueryParams = req.query;
   logger.debug(
-    `${req.method}, method: findAnimals, query: ${JSON.stringify(
+    `${req.method}, Method: findAnimals, query: ${JSON.stringify(
       animalQueryParams
     )}`
   );
@@ -18,7 +18,7 @@ export const findAnimals = async (req: Request, res: Response) => {
     const animals = await SearchService.findAnimalsBy(animalQueryParams);
     return res.status(200).json(animals);
   } catch (error) {
-    logger.error(error);
+    logger.warn("Animals not found");
     return res.status(404).json({ message: "Animals not found" });
   }
 };
@@ -26,7 +26,7 @@ export const findAnimals = async (req: Request, res: Response) => {
 export const findHabitats = async (req: Request, res: Response) => {
   const { area }: HabitatQueryParams = req.query;
   logger.debug(
-    `${req.method}, method: findHabitats, query: ${JSON.stringify(area)}`
+    `${req.method}, Method: findHabitats, query: ${JSON.stringify(area)}`
   );
   try {
     const habitats = await SearchService.findHabitatsBy({
@@ -34,7 +34,7 @@ export const findHabitats = async (req: Request, res: Response) => {
     });
     return res.status(200).json(habitats);
   } catch (error) {
-    logger.error(error);
+    logger.warn("Habitats not found");
     return res.status(404).json({ message: "Habitats not found" });
   }
 };
@@ -42,13 +42,13 @@ export const findHabitats = async (req: Request, res: Response) => {
 export const findSuppliers = async (req: Request, res: Response) => {
   const params: SupplierQueryParams = req.query;
   logger.debug(
-    `${req.method}, method: findSuppliers, query: ${JSON.stringify(params)}`
+    `${req.method}, Method: findSuppliers, query: ${JSON.stringify(params)}`
   );
   try {
     const suppliers = await SearchService.findSuppliersBy(params);
     return res.status(200).json(suppliers);
   } catch (error) {
-    logger.error(error);
+    logger.warn("Suppliers not found");
     return res.status(404).json({ message: "Suppliers not found" });
   }
 };
