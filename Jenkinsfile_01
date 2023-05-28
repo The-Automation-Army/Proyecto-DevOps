@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh '''BRANCH=$(echo $GIT_BRANCH | cut -b 8-11)
                 docker stop zoo-api
-                docker run --rm --name zoo-api --detach --network zoo-network -p 3000:3000 -v /srv/implementations/zoo-api:/app/logs /home animales-bonitos-$BRANCH:1.0.0-$BUILD_ID'''
+                docker run --rm --name zoo-api --detach --network zoo-network -p 3000:3000 -v /srv/implementations/zoo-api:/app/logs animales-bonitos-$BRANCH:1.0.0-$BUILD_ID'''
             }
         }
     }
