@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
 import * as ZookeeperService from "../services/zookeeper.service";
-import { debugApi, debugRequestBody, warnEntityNotFound } from "../utils/loggerCases";
+import {
+  debugApi,
+  debugRequestBody,
+  warnEntityNotFound,
+} from "../utils/loggerCases";
 import { logger } from "../utils/logger";
 
-export const getAllZookeepers = async () => {
+export const getAllZookeepers = async (req: Request, res: Response) => {
   debugApi("getAllZookeepers");
   const zookeepers = await ZookeeperService.findAll();
-  return zookeepers;
+  return res.status(200).json(zookeepers);
 };
 
 export const getOneZookeeper = async (req: Request, res: Response) => {
